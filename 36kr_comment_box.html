@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>36kr文章评论组件</title>
+    <style>
+    /*如何组织 之 css reset*/
+    *, :after, :before{
+        box-sizing: border-box;
+    }  
+    a{
+        text-decoration: none;
+        background-color: transparent;
+        color: #366df0;
+        cursor: pointer;
+        transition: all .2s ease;
+        /*ease : 过渡的物理引擎函数 先慢后快 渐变*/
+    }
+    /*a:hover{
+        color: red;
+    }*/
+    ul{
+        list-style: none;  
+        padding: 0;
+        display: block;
+        -webkit-margin-before: 1em;
+        -webkit-margin-after: 1em;
+        -webkit-margin-start: 0px;
+        -webkit-margin-end: 0px;
+        -webkit-padding-start: 40px;
+    }
+    li{
+            display: list-item;
+    }
+    textarea{
+        overflow: auto;
+        /*textarea table*/
+        vertical-align: bottom;
+        resize: vertical;
+    }
+    /*article 文章标签 博客 提升页面重要性 comment*/
+    /*aside 侧边栏 语义化*/
+    /*底部 section>header + footer */
+
+    article, aside, footer,  header, main, nav, section{
+        display: block;
+    }
+    /*如何组织 之 common css*/
+    body{
+        /*平滑抗锯齿*/
+        -webkit-font-smoothing:antialiased;
+        font-family: Microsoft YaHei, sans-serif;
+    }
+    h1,h2,h3,h4,h5,h6{
+        /*margin: 0 0 1.6rem;*/
+        /*rem 相对单位  html font-size 默认16px*/
+        margin-bottom: 1.6rem;
+        font-weight: 600;
+         /*normal ,  border 700    纤细<300*/
+        font-size: 100%;
+    }
+    /*对于同一个元素多次定义，默认后面覆盖前面的*/
+    /*优先级：类名得分10  标签1   id 100    !important 最大*/
+   /*如何组织 之 业务样式*/
+   /*评论样式*/
+   .comment-box{
+       font-size: 15px;
+       color: #3d464d;
+       opacity: 1;
+       width: 400px;
+
+   }
+    .single-post-comment h4{
+        font-size: 16px;
+        margin-bottom: .5rem;
+        margin-top: 1rem;
+    }
+     .single-post-comment h4 a{
+         color: #666;
+     }
+    .single-post-comment .notlogin textarea{
+          -webkit-user-select: none;
+          user-select: none;
+          background-color: #fafafa;
+          color: #b6cad9;
+          outline: 1px solid red;
+          /*轮廓 文本框框外面  border是盒子的一部分，占面积的，outline不占,常用作高亮*/
+          -webkit-appearance: none;
+          /*重置浏览器带的属性*/
+          padding: .2rem;
+          width: 100%;  
+          background-color: #f7f7f7;
+          border: 1px solid #d3d7db;
+          -webkit-border-radius: 3px;
+          border-radius: 3px;
+          font-size: 14px;
+          margin-bottom: 15px;
+          height: 5rem;
+    } 
+    .single-post-comment .input-module{
+        margin-bottom: 1rem;
+    }
+    .single-post-comment .input-module .user{
+        clear: both;
+        /*清除上面的浮动*/
+    }
+    .single-post-comment .input-module button{
+        background-color: transparent;
+        font-size: 14px;
+        -webkit-border-radius: 3px;
+        border-radius: 3px;
+        outline: none;
+        /*一般表单有outline*/
+        float: right;
+        color: #008df2;
+        border: 1px solid #008df2;
+    }
+    .single-post-comment .notlogin button{
+        border-color: #428544;
+        color: #428544;
+    }
+    .single-post-comment .notlogin button a,
+    .single-post-comment .notlogin button a:hover{
+        color: #4285f4;
+    }
+    .single-post-comment .input-module .current-user{
+        font-size: 14px;
+    }
+    .single-post-comment .input-module .current-user span{
+        color: #999;
+    }
+    .single-post-comment .input-module .current-user .img{
+        width: 30px;
+        height: 30px;
+        -webkit-border-radius: 50%;
+        border-radius: 50%;
+        background-color: red;
+        /*行内块级元素 既具有block的能力，设置宽高,又像inline温良一点，不会把兄弟元素挤下去。*/
+        /*行内元素由内容决定宽高，无法设置*/
+        display: inline-block;
+    }
+    .article-detail .single-post-comment .display-module{
+        text-align: center;
+    }
+    .single-post-comment .display-module .msgwrap {
+    overflow: hidden;
+    font-size: 14px;
+    line-height: 21px;
+}
+    .single-post-comment .display-module .msgwrap .name {
+    color: #4285f4;
+}
+    /*.display-module .img {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: .75rem;
+    vertical-align: middle;
+    float: left;
+    margin-top: .5rem;
+}*/
+
+    </style>
+</head>
+<body>
+    <!--<div style="height:3000px">
+        <a href="#comment">前往评论</a>
+        </div>-->
+    <div class="comment-box">
+        <section class="single-post-comment">
+            <h4><a href="#" name="comment">参与讨论</a>
+            </h4>
+            <div class="input-module notlogin">
+                <textarea placeholder="请登录后参与评论">
+                </textarea>
+                <div class="user">
+                    <button title="请登录后参与评论">
+                        <a href="javascript:;">提交评论</a>
+                        </button>
+                    <div class="current-user">
+                        <span class="img"></span>
+                        <a href="" class="name">登录</a>
+                        <span>后参与讨论</span>
+                    </div>
+                </div>
+  <!--div.user>(button[title="请登录后参与评论"]>a)+div.current-user>span.img+a.name{登录}+span{后参与讨论}-->
+            </div>
+            <div class="display-module">
+                <div>
+                    <ul data-ii="10">
+                        <li data-id="400929">
+                            <span class="img" style="background: url("//krplus-pic.b0.upaiyun.com/default_avatar.png!100") 50% 50% / cover no-repeat;"></span>
+                            <div class="msgwrap">
+                                <span class="name">willmicro</span>
+                                <span class="time">24小时前</span>
+                                <p>
+                                    <span class="text">媒体人的自我炒作而已 最后好公司都毁在传统媒体人的手里</span>
+                                </p>
+                                <div class="replay_button">
+                                    <a class="submit" data-stat-click="pinglun.huifupinglun">回复</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li data-id="400929">
+                            <span class="img" style="background: url("//krplus-pic.b0.upaiyun.com/default_avatar.png!100") 50% 50% / cover no-repeat;"></span>
+                            <div class="msgwrap">
+                                <span class="name">赞士</span>
+                                <span class="time">2017-03-07</span>
+                                <p>
+                                    <span class="text">内容总监，CCO？</span>
+                                </p>
+                                <div class="replay_button">
+                                    <a class="submit" data-stat-click="pinglun.huifupinglun">回复</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+</body>
+</html>
